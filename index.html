@@ -94,7 +94,7 @@ li.done .t{color:var(--muted);text-decoration:line-through;text-decoration-color
 <body>
 <div class="wrap">
   <header>
-    <div class="eyebrow">Oct 28 — Dec 31</div>
+    <div class="eyebrow">Oct 26 — Dec 31</div>
     <h1>Non-Negotiables</h1>
   </header>
   <section class="card left" aria-label="Days left in the year"><span class="lnum" id="left"></span><span class="ltxt"><span class="llbl" id="leftLbl"></span><span class="lsub" id="leftSub"></span></span></section>
@@ -135,7 +135,7 @@ let state={};try{state=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
 const pad=n=>String(n).padStart(2,'0');
 const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-const startKey='2026-10-28', endKey='2026-12-31';
+const startKey='2026-10-26', endKey='2026-12-31';
 const inRange=k=>k>=startKey&&k<=endKey;
 let todayKey=iso(new Date());
 const MONTHS=[9,10,11];
@@ -147,10 +147,10 @@ const count=k=>DAILY.filter(i=>get(k,i)).length;
 const weekGym=k=>{const [y,m,d]=k.split('-').map(Number);const base=new Date(y,m-1,d);const s=new Date(y,m-1,d-base.getDay());let n=0;for(let i=0;i<7;i++){const x=new Date(s);x.setDate(s.getDate()+i);if(get(iso(x),GYM))n++;}return n;};
 function renderLeft(){
   const now=new Date(), t=new Date(now.getFullYear(),now.getMonth(),now.getDate()), e=new Date(now.getFullYear(),11,31);
-  const left=Math.round((e-t)/864e5);
+  const left=Math.round((e-t)/864e5)+1;
   document.getElementById('left').textContent=left;
-  document.getElementById('leftLbl').textContent=(left===1?'day':'days')+' left in '+now.getFullYear();
-  document.getElementById('leftSub').textContent=todayKey<startKey?'Starts Wednesday, Oct 28':'';
+  document.getElementById('leftLbl').textContent=(left===1?'day':'days')+' left in '+now.getFullYear()+', counting today';
+  document.getElementById('leftSub').textContent=todayKey<startKey?'Starts Monday, Oct 26':'';
 }
 
 function renderCal(){
